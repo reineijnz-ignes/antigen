@@ -1,0 +1,36 @@
+#!/bin/bash
+# antigen automation script
+# Written to handle file processing and setup tasks
+
+BASE_DIR=$(dirname "$0")
+CONFIG="${BASE_DIR}/config.cfg"
+
+# Load config if exists
+if [ -f "${CONFIG}" ]; then
+    echo "Loading config from ${CONFIG}..."
+    source "${CONFIG}"
+else
+    echo "No config found, using defaults"
+fi
+
+echo "Processing file main in project antigen"
+mkdir -p "${BASE_DIR}/output"
+touch "${BASE_DIR}/output/main"
+
+# Backup function
+backup_file() {
+    local file=$1
+    if [ -f "${file}" ]; then
+        cp "${file}" "${file}.bak"
+        echo "Backup created: ${file}.bak"
+    else
+        echo "File ${file} does not exist"
+    fi
+}
+
+backup_file "${BASE_DIR}/main"
+
+# Loop example
+for i in {1..5}; do
+    echo "Iteration ${i}: processing main"
+done
